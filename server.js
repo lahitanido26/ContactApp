@@ -1,12 +1,14 @@
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const morgan = require('morgan')
+const { loadContact, findContact } = require('./utils/contacts')
+
 const app = express()
 const port = 3000
 
-app.use(morgan('dev'))
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
+app.use(morgan('dev'))
 
 //Built-in middleware
 app.use(express.static('public'))
@@ -51,9 +53,22 @@ app.get('/about', (req, res) => {
 
 app.get('/contact', (req, res) => {
   res.status(200)
+  const contacts = loadContact()
   res.render('contact', {
     layout: 'layouts/main-layout',
     title: 'Halaman Contact',
+    contacts,
+  })
+  // res.sendFile('./contact.html',{root: __dirname})
+})
+
+app.get('/contact/:nama', (req, res) => {
+  res.status(200)
+  const contact = findContact(req.params.nama)
+  res.render('detail', {
+    layout: 'layouts/main-layout',
+    title: 'Halaman Detail',
+    contact,
   })
   // res.sendFile('./contact.html',{root: __dirname})
 })
