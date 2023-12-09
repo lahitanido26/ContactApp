@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
   ]
 
   res.render('index', {
-    nama: 'Fiki Aprian',
+    nama: 'Anissa Tri Lahitani',
     title: 'Halaman Index',
     layout: 'layouts/main-layout',
     mahasiswa: mahasiswa,
